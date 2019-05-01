@@ -1,0 +1,157 @@
+service: web-api
+
+custom:
+  secrets: ${file(secrets.json)}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  timeout: 30
+  stage: ${self:custom.secrets.NODE_ENV}
+  environment:
+    NODE_ENV: ${self:custom.secrets.NODE_ENV}
+    DB_NAME: ${self:custom.secrets.DB_NAME}
+    DB_USER: ${self:custom.secrets.DB_USER}
+    DB_PASSWORD: ${self:custom.secrets.DB_PASSWORD}
+    DB_HOST: ${self:custom.secrets.DB_HOST}
+    DB_PORT: ${self:custom.secrets.DB_PORT}
+  vpc:
+    securityGroupIds:
+      - ${self:custom.secrets.SECURITY_GROUP_ID}
+    subnetIds:
+      - ${self:custom.secrets.SUBNET1_ID}
+      - ${self:custom.secrets.SUBNET2_ID}
+      - ${self:custom.secrets.SUBNET3_ID}
+      - ${self:custom.secrets.SUBNET4_ID}
+
+functions:
+  healthCheck:
+    handler: handler.healthCheck
+    events:
+      - http:
+          path: /
+          method: get
+          cors: true
+
+  create_airport:
+    handler: airport.create
+    events:
+      - http:
+          path: ap1/airport
+          method: post
+          cors: true
+
+  getOne_airport:
+    handler: airport.getOne
+    events:
+      - http:
+          path: ap1/airport/{id}
+          method: get
+          cors: true
+
+  getAll_airport:
+    handler: airport.getAll
+    events:
+     - http:
+         path: ap1/airport
+         method: get
+         cors: true
+
+  update_airport:
+    handler: airport.update
+    events:
+     - http:
+         path: ap1/airport/{id}
+         method: put
+         cors: true
+
+  destroy_airport:
+    handler: airport.destroy
+    events:
+     - http:
+         path: ap1/airport/{id}
+         method: delete
+         cors: true
+
+  create_beacon:
+    handler: beacon.create
+    events:
+      - http:
+          path: ap1/beacon
+          method: post
+          cors: true
+
+  getOne_beacon:
+    handler: beacon.getOne
+    events:
+      - http:
+          path: ap1/beacon/{id}
+          method: get
+          cors: true
+
+  getAll_beacon:
+    handler: beacon.getAll
+    events:
+     - http:
+         path: ap1/beacon
+         method: get
+         cors: true
+
+  update_beacon:
+    handler: beacon.update
+    events:
+     - http:
+         path: ap1/beacon/{id}
+         method: put
+         cors: true
+
+  destroy_beacon:
+    handler: beacon.destroy
+    events:
+     - http:
+         path: ap1/beacon/{id}
+         method: delete
+         cors: true
+
+  create_user:
+    handler: user.create
+    events:
+      - http:
+          path: ap1/user
+          method: post
+          cors: true
+
+  getOne_user:
+    handler: user.getOne
+    events:
+      - http:
+          path: ap1/user/{id}
+          method: get
+          cors: true
+
+  getAll_user:
+    handler: user.getAll
+    events:
+     - http:
+         path: ap1/user
+         method: get
+         cors: true
+
+  update_user:
+    handler: user.update
+    events:
+     - http:
+         path: ap1/user/{id}
+         method: put
+         cors: true
+
+  destroy_user:
+    handler: user.destroy
+    events:
+     - http:
+         path: ap1/user/{id}
+         method: delete
+         cors: true
+
+plugins:
+  - serverless-offline

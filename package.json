@@ -1,0 +1,22 @@
+{
+  "name": "building-a-serverless-api-with-nodejs-and-aws-aurora-serverless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "offline": "sls offline start --skipCacheInvalidation"
+  },
+  "keywords": [],
+  "author": "afarghaly",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless-offline": "^3.33.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.6.7",
+    "bluebird": "^3.5.4",
+    "mysql2": "^1.6.4",
+    "sequelize": "^4.41.2",
+    "uuid": "^2.0.3"
+  }
+}
